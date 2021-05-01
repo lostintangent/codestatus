@@ -16,14 +16,14 @@ export function registerCommands(
 
       if (message) {
         const octoKit = await provider.getOctokit();
-        setStatus(octoKit, { message });
+        setStatus(octoKit!, { message });
       }
     })
   );
 
   const setAvailability = async (limitedAvailability: boolean) => {
     const octoKit = await provider.getOctokit();
-    setStatus(octoKit, { limitedAvailability });
+    setStatus(octoKit!, { limitedAvailability });
   };
 
   context.subscriptions.push(

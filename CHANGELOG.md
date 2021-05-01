@@ -1,9 +1,7 @@
-# Change Log
+## v0.0.2 (04/30/21)
 
-All notable changes to the "codestatus" extension will be documented in this file.
+- Updated the status bar UX
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
-
-## [Unreleased]
+## v0.0.1 (04/30/21)
 
 - Initial release

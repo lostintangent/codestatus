@@ -40,7 +40,9 @@ export class AuthProvider {
     this.graphql = undefined;
   }
 
-  async getOctokit(): Promise<typeof graphql> {
+  async getOctokit(
+    promptUser: boolean = true
+  ): Promise<typeof graphql | undefined> {
     if (this.graphql) {
       return this.graphql;
     }
@@ -48,8 +50,13 @@ export class AuthProvider {
     const session = await vscode.authentication.getSession(
       GITHUB_AUTH_PROVIDER_ID,
       SCOPES,
-      { createIfNone: true }
+      { createIfNone: promptUser }
     );
+
+    if (!session) {
+      return;
+    }
+
     this.graphql = graphql.defaults({
       headers: {
         authorization: `token ${session.accessToken}`,

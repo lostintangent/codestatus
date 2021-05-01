@@ -33,6 +33,16 @@ export async function setStatus(
   octoKit: typeof graphql,
   newStatus: UserStatus
 ) {
+  // @ts-ignore
+  if (newStatus.indicatesLimitedAvailability !== undefined) {
+    if (newStatus.limitedAvailability === undefined) {
+      // @ts-ignore
+      newStatus.limitedAvailability = newStatus.indicatesLimitedAvailability;
+    }
+    // @ts-ignore
+    delete newStatus.indicatesLimitedAvailability;
+  }
+
   if (
     newStatus.message === undefined &&
     newStatus.limitedAvailability !== undefined
@@ -52,6 +62,14 @@ export async function setStatus(
     // The GitHub API will default the busy status to false, so we need
     // to check whether the user is busy and if so, reset it on the call.
     newStatus.limitedAvailability = true;
+  }
+
+  if (newStatus.emoji === null) {
+    delete newStatus.emoji;
+  }
+
+  if (newStatus.expiresAt === null) {
+    delete newStatus.expiresAt;
   }
 
   const {

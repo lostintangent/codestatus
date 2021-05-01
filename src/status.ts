@@ -13,13 +13,19 @@ export function registerStatusBar() {
     () => [store.status?.message, store.status?.indicatesLimitedAvailability],
     () => {
       if (store.status?.message) {
-        const statusSuffix = store.status?.indicatesLimitedAvailability
-          ? " (Busy)"
-          : "";
+        statusBarItem.text = `$(github) ${store.status.message!}`;
 
-        statusBarItem.text = `$(github) ${store.status
-          .message!}${statusSuffix}`;
+        if (store.status?.indicatesLimitedAvailability) {
+          statusBarItem.backgroundColor = new vscode.ThemeColor(
+            "statusBarItem.errorBackground"
+          );
+          statusBarItem.tooltip = `${statusBarItem.text} (Busy)`;
+        } else {
+          statusBarItem.backgroundColor = undefined;
+          statusBarItem.tooltip = undefined;
+        }
 
+        statusBarItem.text = `$(github) ${store.status.message!}`;
         statusBarItem.show();
       } else {
         statusBarItem.hide();
